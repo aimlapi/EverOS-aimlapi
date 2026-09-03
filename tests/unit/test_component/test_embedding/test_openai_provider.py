@@ -35,3 +35,12 @@ async def test_empty_response_data_raises_embedding_error() -> None:
 
     with pytest.raises(EmbeddingServiceError, match="empty data"):
         await provider.embed("hello")
+
+
+def test_attribution_headers_sent_only_to_aimlapi() -> None:
+    """Partner headers ride aimlapi.com requests and no others."""
+    ours = _make_provider(base_url="https://api.aimlapi.com/v1")
+    assert ours._client.default_headers["X-AIMLAPI-Partner-ID"] == "part_everos"
+
+    theirs = _make_provider(base_url="https://api.deepinfra.com/v1/openai")
+    assert "X-AIMLAPI-Partner-ID" not in theirs._client.default_headers

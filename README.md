@@ -106,13 +106,15 @@ built into Raven. Choose an integration to open its setup guide.
 
 ## Quick Start
 
-> One OpenRouter API key is enough to start EverOS, write durable memories,
+> One aimlapi.com API key is enough to start EverOS, write durable memories,
 > and retrieve them with keyword search.
 
 ### Prerequisites
 
 - Python 3.12+
-- One [OpenRouter API key](https://openrouter.ai/keys)
+- One [aimlapi.com API key](https://aimlapi.com/app/keys) (recommended), or an
+  [OpenRouter API key](https://openrouter.ai/keys) — the shipped model slugs
+  are spelled the same on both, so only `base_url` differs.
 
 ### 1. Install
 
@@ -139,22 +141,25 @@ the memory move through ingest -> extract -> index -> recall.
 
 <https://github.com/user-attachments/assets/98cb8e1e-2ca8-4504-b0a6-0b9a040a0a5c>
 
-### 3. Initialize and add your OpenRouter key
+### 3. Initialize and add your API key
 
 ```bash
 everos init
 ```
 
 This creates `~/.everos/everos.toml` and `~/.everos/ome.toml`. Open
-`~/.everos/everos.toml`; the generated model and OpenRouter URL are already
-correct, so replace only the empty `api_key`:
+`~/.everos/everos.toml`; the generated model slug is already correct, so set
+`api_key` and `base_url`:
 
 ```toml
 [llm]
 model = "openai/gpt-4.1-mini"
-api_key = "<OPENROUTER_API_KEY>"
-base_url = "https://openrouter.ai/api/v1"
+api_key = "<AIMLAPI_API_KEY>"
+base_url = "https://api.aimlapi.com/v1"
 ```
+
+To use OpenRouter instead, keep the same `model` and set
+`base_url = "https://openrouter.ai/api/v1"`.
 
 This is the smallest Tier 1 setup: memory add, flush, Markdown persistence,
 cascade indexing, and keyword search.
@@ -242,7 +247,7 @@ For annotated responses and the Markdown files EverOS creates, see
 
 ### What works with one key?
 
-The OpenRouter one-key setup is EverOS Tier 1. It supports server startup,
+The one-key setup above is EverOS Tier 1. It supports server startup,
 memory add and flush, durable Markdown storage, cascade indexing, and keyword
 search. Add optional providers only when you need the features below:
 
@@ -273,7 +278,9 @@ uv pip install 'everos[multimodal]'   # or: pip install 'everos[multimodal]'
 
 This pulls in `everalgo-parser` (with the `[svg]` bundle for SVG support via
 cairosvg). Configure the `[multimodal]` section in `everos.toml`; its default
-model is `google/gemini-3-flash-preview` via OpenRouter.
+model is `google/gemini-3-flash-preview` via OpenRouter. Point `[multimodal]`
+at OpenRouter rather than aimlapi.com — see the limitation noted in
+[docs/configuration.md](docs/configuration.md).
 
 **Office document support requires LibreOffice as a system dependency.**
 The parser shells out to `soffice` (LibreOffice's headless renderer) to

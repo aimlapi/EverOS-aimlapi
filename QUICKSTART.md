@@ -1,10 +1,10 @@
 # Quickstart
 
-> Five minutes from one OpenRouter API key to durable Markdown memory and
+> Five minutes from one aimlapi.com API key to durable Markdown memory and
 > keyword recall.
 
 EverOS runs as a local service. The minimum production path needs only an LLM:
-configure one OpenRouter key, start the server, then call the HTTP API.
+configure one aimlapi.com key, start the server, then call the HTTP API.
 
 ## What the one-key setup includes
 
@@ -21,7 +21,8 @@ They are not required for this walkthrough.
 ## Prerequisites
 
 - Python 3.12+
-- One [OpenRouter API key](https://openrouter.ai/keys)
+- One [aimlapi.com API key](https://aimlapi.com/app/keys) (recommended), or an
+  [OpenRouter API key](https://openrouter.ai/keys)
 
 ## 1. Install
 
@@ -82,18 +83,20 @@ This creates two files under the default memory root:
 To use another root, run `everos init --root <path>` and pass the same
 `--root <path>` to subsequent commands.
 
-## 4. Add your OpenRouter key
+## 4. Add your API key
 
-Open `~/.everos/everos.toml`. The generated
-`[llm]` section already contains the recommended model and base URL; replace
-only the empty `api_key`:
+Open `~/.everos/everos.toml`. The generated `[llm]` section already contains
+the recommended model slug; set `api_key` and `base_url`:
 
 ```toml
 [llm]
 model = "openai/gpt-4.1-mini"
-api_key = "<OPENROUTER_API_KEY>"
-base_url = "https://openrouter.ai/api/v1"
+api_key = "<AIMLAPI_API_KEY>"
+base_url = "https://api.aimlapi.com/v1"
 ```
+
+The same slug works on OpenRouter — swap `base_url` for
+`https://openrouter.ai/api/v1` and use an OpenRouter key instead.
 
 Leave `[embedding]`, `[rerank]`, and `[multimodal]` unchanged for this
 walkthrough. Their empty keys do not prevent the server from starting; this
@@ -208,7 +211,7 @@ Cap. If the first search is empty, wait a moment for cascade indexing and retry.
 
 Keyword retrieval returns matching episodes from the local BM25 index. Atomic
 facts are created by an embedding-dependent strategy, so they are not expected
-in the OpenRouter Tier 1 response.
+in the Tier 1 response.
 
 ## 9. Read the Markdown source of truth
 
@@ -254,7 +257,7 @@ EverOS reports unavailable features through `/health`. Requests that require a
 missing provider fail fast with a descriptive HTTP 422 instead of silently
 degrading to a different search method.
 
-You can replace OpenRouter with another OpenAI-compatible LLM endpoint by
+You can replace aimlapi.com with another OpenAI-compatible LLM endpoint by
 changing the `[llm]` model, base URL, and key.
 
 ## Stop the server

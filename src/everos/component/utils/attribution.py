@@ -29,7 +29,7 @@ _AIMLAPI_DOMAIN = "aimlapi.com"
 
 # Identifies EverOS to aimlapi.com. Must match ``^part_[A-Za-z0-9]{1,64}$``
 # — a malformed id is accepted by the API and then silently unattributed.
-_PARTNER_ID = "part_everos"
+_PARTNER_ID = "part_VxTyAUvoIVbl30dPrB7kbRZk"
 _SOURCE = "agent/everos"
 
 # ``HTTP-Referer`` / ``X-Title`` name the *host* project (EverOS), the

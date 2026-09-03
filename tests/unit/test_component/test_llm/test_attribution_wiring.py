@@ -84,7 +84,7 @@ def test_llm_client_sends_attribution_to_aimlapi(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     extra = _capture_llm_config(monkeypatch, base_url=_AIMLAPI)
-    assert extra["extra_headers"]["X-AIMLAPI-Partner-ID"] == "part_everos"
+    assert extra["extra_headers"]["X-AIMLAPI-Partner-ID"] == "part_VxTyAUvoIVbl30dPrB7kbRZk"
     assert extra["extra_headers"]["X-AIMLAPI-Source"] == "agent/everos"
 
 
@@ -98,7 +98,7 @@ def test_multimodal_client_sends_attribution_to_aimlapi(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     extra = _capture_multimodal_config(monkeypatch, base_url=_AIMLAPI)
-    assert extra["extra_headers"]["X-AIMLAPI-Partner-ID"] == "part_everos"
+    assert extra["extra_headers"]["X-AIMLAPI-Partner-ID"] == "part_VxTyAUvoIVbl30dPrB7kbRZk"
 
 
 def test_multimodal_client_adds_no_request_key_for_other_providers(
@@ -110,7 +110,7 @@ def test_multimodal_client_adds_no_request_key_for_other_providers(
 def test_openai_provider_sets_default_headers_for_aimlapi() -> None:
     provider = OpenAIProvider(model="m", api_key="sk-test", base_url=_AIMLAPI)
     sent = provider._client.default_headers
-    assert sent["X-AIMLAPI-Partner-ID"] == "part_everos"
+    assert sent["X-AIMLAPI-Partner-ID"] == "part_VxTyAUvoIVbl30dPrB7kbRZk"
     # The SDK's own defaults survive — the partner headers merge in.
     assert "Content-Type" in sent
 

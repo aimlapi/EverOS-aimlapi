@@ -18,6 +18,8 @@ from typing import Any, Literal
 
 import openai
 
+from everos.component.utils.attribution import aimlapi_headers
+
 from .protocol import ChatMessage, ChatResponse, LLMError, Usage
 
 
@@ -54,10 +56,13 @@ class OpenAIProvider:
         self._model = model
         self._temperature = temperature
         self._max_tokens = max_tokens
+        # Partner attribution, merged into (not over) the SDK's own
+        # defaults and empty unless ``base_url`` is an aimlapi.com host.
         self._client = openai.AsyncOpenAI(
             api_key=api_key,
             base_url=base_url,
             timeout=timeout,
+            default_headers=aimlapi_headers(base_url) or None,
         )
 
     async def chat(

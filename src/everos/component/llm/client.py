@@ -17,6 +17,7 @@ from everalgo.llm.protocols import LLMClient
 from everalgo.llm.types import ChatMessage, ChatResponse
 from pydantic import BaseModel
 
+from everos.component.utils.attribution import aimlapi_request_extra
 from everos.component.utils.config_hints import missing_config_error
 from everos.config import load_settings
 from everos.core.observability.logging import get_logger
@@ -101,6 +102,9 @@ def get_llm_client() -> LLMClient:
             model=llm_cfg.model,
             api_key=api_key,
             base_url=llm_cfg.base_url,
+            # Empty for every other endpoint, so no key is added to the
+            # request body and no header can reach a foreign provider.
+            extra=aimlapi_request_extra(llm_cfg.base_url),
         )
     )
     # Wrap for OTel token capture only when tracing is on — keeps the
@@ -141,6 +145,7 @@ def get_multimodal_llm_client() -> LLMClient:
             model=cfg.model,
             api_key=api_key,
             base_url=cfg.base_url,
+            extra=aimlapi_request_extra(cfg.base_url),
         )
     )
     logger.info("multimodal_llm_client_built", model=cfg.model)
